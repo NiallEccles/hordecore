@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://w8whdg7dranu"]
+
+[ext_resource type="Texture2D" uid="uid://bjbg6wjbdwtjt" path="res://Entities/Prototype/Floor/texture_07.png" id="1_qnd8e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rmrih"]
+albedo_texture = ExtResource("1_qnd8e")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[node name="Floor" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5124512, 0, 0)
+use_collision = true
+size = Vector3(15, 1, 15)
+material = SubResource("StandardMaterial3D_rmrih")
