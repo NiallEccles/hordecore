@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://i4kw4sifmbqb"]
+[gd_scene load_steps=6 format=3 uid="uid://i4kw4sifmbqb"]
 
 [ext_resource type="Script" uid="uid://cgs82eclbwcdp" path="res://Entities/Enemy/Enemy.gd" id="1_m2t2i"]
+[ext_resource type="PackedScene" uid="uid://dcopbxa6bmvcj" path="res://Common/Health/Health.tscn" id="2_t7hpb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s42wg"]
 albedo_color = Color(1, 0, 0, 1)
@@ -23,5 +24,8 @@ shape = SubResource("CapsuleShape3D_s42wg")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true
+
+[node name="Health" parent="." instance=ExtResource("2_t7hpb")]
+max_health = 10.0
 
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
