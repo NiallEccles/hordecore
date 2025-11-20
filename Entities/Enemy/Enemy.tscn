@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://i4kw4sifmbqb"]
+[gd_scene load_steps=8 format=3 uid="uid://i4kw4sifmbqb"]
 
 [ext_resource type="Script" uid="uid://cgs82eclbwcdp" path="res://Entities/Enemy/Enemy.gd" id="1_m2t2i"]
 [ext_resource type="PackedScene" uid="uid://dcopbxa6bmvcj" path="res://Common/Health/Health.tscn" id="2_t7hpb"]
+[ext_resource type="PackedScene" uid="uid://dlibnoay2kpr0" path="res://Common/HealthBar/HealthBar.tscn" id="3_salu8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s42wg"]
 albedo_color = Color(1, 0, 0, 1)
@@ -11,6 +12,9 @@ material = SubResource("StandardMaterial3D_s42wg")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s42wg"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_salu8"]
+viewport_path = NodePath("SubViewport")
+
 [node name="Enemy" type="CharacterBody3D" groups=["Enemy"]]
 script = ExtResource("1_m2t2i")
 
@@ -19,13 +23,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_m2t2i")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_s42wg")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true
 
 [node name="Health" parent="." instance=ExtResource("2_t7hpb")]
-max_health = 10.0
+max_health = 50.0
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(240, 8)
+
+[node name="HealthBar" parent="SubViewport" instance=ExtResource("3_salu8")]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2990158, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_salu8")
 
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
+[connection signal="health_changed" from="Health" to="." method="_on_health_health_changed"]
