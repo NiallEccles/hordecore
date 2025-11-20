@@ -1,14 +1,17 @@
 extends CharacterBody3D
 
-var SPEED = 2.0
+var SPEED = 0
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var health_component: HealthComponent = $Health
+@onready var health_bar: ProgressBar = $SubViewport/HealthBar
 
 func _ready() -> void:
 	# Connect to health component signals
 	if health_component:
 		health_component.died.connect(_on_died)
 		health_component.damage_taken.connect(_on_damage_taken)
+	
+	health_bar.init(health_component.max_health)
 
 func _physics_process(delta):
 	var current_location = global_transform.origin
@@ -31,3 +34,7 @@ func _on_died() -> void:
 func _on_damage_taken(amount: float) -> void:
 	# Optional: Add visual feedback when damaged (flash, sound, etc.)
 	print("Enemy took ", amount, " damage!")
+
+
+func _on_health_health_changed(new_health: Variant, max_health: Variant) -> void:
+	health_bar.health = new_health
