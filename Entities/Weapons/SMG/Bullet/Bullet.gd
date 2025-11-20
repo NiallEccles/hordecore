@@ -6,29 +6,37 @@ const SPEED = 80.0
 @export var DAMAGE: float = 4.0
 
 @onready var mesh: MeshInstance3D = $MeshInstance3D
-@onready var ray: RayCast3D = $RayCast3D
+@onready var area: Area3D = $Area3D  # Use Area3D instead of RayCast3D
 @onready var particles = $GPUParticles3D
 
+var has_hit: bool = false
+
 func _ready() -> void:
-	pass
+	# Connect the body_entered signal
+	if area:
+		area.body_entered.connect(_on_body_entered)
 
 func _process(delta: float) -> void:
-	position += transform.basis * Vector3(0, 0, -SPEED) * delta
+	if not has_hit:
+		position += transform.basis * Vector3(0, 0, -SPEED) * delta
+
+func _on_body_entered(body: Node3D) -> void:
+	if has_hit:
+		return  # Prevent multiple hits
 	
-	if ray.is_colliding():
-		var collider = ray.get_collider()
-		
-		# Check if the collided object has a HealthComponent
-		if collider:
-			var health_component = _find_health_component(collider)
-			if health_component:
-				health_component.take_damage(DAMAGE)
-		
-		# Bullet impact effects
-		mesh.visible = false
-		particles.emitting = true
-		await get_tree().create_timer(1.0).timeout
-		queue_free()
+	has_hit = true
+	
+	# Check if the body has a HealthComponent
+	var health_component = _find_health_component(body)
+	if health_component:
+		health_component.take_damage(DAMAGE)
+		print("Hit detected! Dealt ", DAMAGE, " damage to ", body.name)
+	
+	# Bullet impact effects
+	mesh.visible = false
+	particles.emitting = true
+	await get_tree().create_timer(1.0).timeout
+	queue_free()
 
 # Helper function to find HealthComponent in the node or its children
 func _find_health_component(node: Node) -> HealthComponent:
@@ -44,4 +52,5 @@ func _find_health_component(node: Node) -> HealthComponent:
 	return null
 
 func _on_timer_timeout() -> void:
-	queue_free()
+	if not has_hit:
+		queue_free()
