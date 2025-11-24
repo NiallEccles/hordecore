@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=4 uid="uid://cexbivacfveeo"]
+[gd_scene load_steps=9 format=4 uid="uid://cexbivacfveeo"]
 
+[ext_resource type="Script" uid="uid://cmxmxtagnntj2" path="res://Entities/Weapons/SMG/SMG.gd" id="1_5ygap"]
 [ext_resource type="Texture2D" uid="uid://1bvu8nee52a3" path="res://Entities/Weapons/SMG/Textures/colormap.png" id="1_dxoxs"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bgdgf"]
@@ -83,6 +84,11 @@ _data = {
 }
 
 [node name="Smg" type="Node3D"]
+script = ExtResource("1_5ygap")
+weapon_type = "SMG"
+weapon_name = "Rattler"
+max_ammo = 28
+max_mag_ammo = 28
 
 [node name="blaster-i" type="MeshInstance3D" parent="."]
 cast_shadow = 0
