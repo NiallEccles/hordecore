@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxbjgxs7ccvt6"]
+[gd_scene load_steps=6 format=3 uid="uid://dxbjgxs7ccvt6"]
 
 [ext_resource type="PackedScene" uid="uid://cexbivacfveeo" path="res://Entities/Weapons/SMG/SMG.tscn" id="1_e5kic"]
 [ext_resource type="Script" uid="uid://dutwddpy80pm4" path="res://Entities/Player/Player.gd" id="1_ww0jn"]
 [ext_resource type="Texture2D" uid="uid://4g72hxpfm6ln" path="res://Entities/Player/crosshair001.png" id="3_vweq0"]
+[ext_resource type="PackedScene" uid="uid://b8pergvlsetdc" path="res://Entities/WeaponManager/WeaponManager.tscn" id="4_1des2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u36tg"]
 
@@ -18,6 +19,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3917661, -0.14635038)
 
 [node name="Smg" parent="Camera3D" instance=ExtResource("1_e5kic")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, -0.39176607, -0.5536496)
+visible = false
+
+[node name="WeaponSocket" type="Marker3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, -0.392, -0.554)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -45,3 +50,5 @@ offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_vweq0")
+
+[node name="WeaponManager" parent="." instance=ExtResource("4_1des2")]

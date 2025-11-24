@@ -11,6 +11,7 @@ extends CharacterBody3D
 @onready var weapon = $Camera3D/Smg
 @onready var weapon_animation = $Camera3D/Smg/AnimationPlayer
 @onready var weapon_barrel = $Camera3D/Smg/RayCast3D
+@onready var weapon_manager = $WeaponManager
 
 # Shooting variables
 @export var fire_rate: float = 0.1  # Time between shots in seconds (0.1 = 10 shots/sec)
@@ -27,6 +28,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _ready():
 	# Capture the mouse cursor
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if !weapon_manager:
+		printerr("Weapon Manager not found!")
 
 func _input(event):
 	# Handle mouse movement for camera look
@@ -59,7 +62,8 @@ func _physics_process(delta):
 		
 	# Handle shooting
 	if Input.is_action_pressed('shoot') and can_shoot:
-		shoot()
+		#shoot()
+		weapon_manager.fire()
 	
 	# Handle jump
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():

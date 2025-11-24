@@ -14,7 +14,7 @@ sky_material = SubResource("PhysicalSkyMaterial_nvc7p")
 
 [sub_resource type="Environment" id="Environment_nvc7p"]
 background_mode = 1
-background_color = Color(0.8089983, 0.8089983, 0.8089982, 1)
+background_color = Color(0.92535293, 0.9253528, 0.9253529, 1)
 sky = SubResource("Sky_so270")
 ambient_light_color = Color(1, 1, 1, 1)
 
